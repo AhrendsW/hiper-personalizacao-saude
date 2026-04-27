@@ -1,0 +1,11 @@
+.DS_Store
+prototype/.venv/
+prototype/data/*.parquet
+prototype/data/*.csv
+prototype/artifacts/*.joblib
+prototype/artifacts/*.json
+prototype/.env
+**/__pycache__/
+**/.pytest_cache/
+**/.ruff_cache/
+**/.ipynb_checkpoints/
