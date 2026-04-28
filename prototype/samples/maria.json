@@ -1,0 +1,21 @@
+{
+  "patient_id": "BEN0000001",
+  "persona_name": "Maria",
+  "profile": "cronico",
+  "age": 55,
+  "wearable": {
+    "hr_rest_avg": 80,
+    "hrv_avg": 32,
+    "sleep_hours_avg": 5.8,
+    "steps_daily_avg": 4200,
+    "sbp_avg": 148,
+    "dbp_avg": 92
+  },
+  "clinical": {
+    "adherence_gap": 0.6,
+    "n_consult_12m": 5,
+    "n_emergency_12m": 1,
+    "n_admissions_12m": 0,
+    "chronic_count": 1
+  }
+}

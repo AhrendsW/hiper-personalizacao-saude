@@ -1,0 +1,13 @@
+.venv
+.git
+.gitignore
+.env
+data/*.parquet
+artifacts/*.joblib
+artifacts/*.json
+__pycache__
+**/__pycache__
+.pytest_cache
+.ruff_cache
+.ipynb_checkpoints
+notebooks

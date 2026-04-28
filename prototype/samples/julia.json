@@ -1,0 +1,21 @@
+{
+  "patient_id": "BEN0000002",
+  "persona_name": "Júlia",
+  "profile": "jovem",
+  "age": 28,
+  "wearable": {
+    "hr_rest_avg": 64,
+    "hrv_avg": 58,
+    "sleep_hours_avg": 6.2,
+    "steps_daily_avg": 9800,
+    "sbp_avg": 118,
+    "dbp_avg": 76
+  },
+  "clinical": {
+    "adherence_gap": 0.05,
+    "n_consult_12m": 1,
+    "n_emergency_12m": 0,
+    "n_admissions_12m": 0,
+    "chronic_count": 0
+  }
+}

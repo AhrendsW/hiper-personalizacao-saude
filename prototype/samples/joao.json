@@ -1,0 +1,21 @@
+{
+  "patient_id": "BEN0000003",
+  "persona_name": "João",
+  "profile": "idoso",
+  "age": 72,
+  "wearable": {
+    "hr_rest_avg": 76,
+    "hrv_avg": 26,
+    "sleep_hours_avg": 5.5,
+    "steps_daily_avg": 3000,
+    "sbp_avg": 142,
+    "dbp_avg": 86
+  },
+  "clinical": {
+    "adherence_gap": 0.55,
+    "n_consult_12m": 7,
+    "n_emergency_12m": 1,
+    "n_admissions_12m": 1,
+    "chronic_count": 3
+  }
+}
