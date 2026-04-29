@@ -31,6 +31,8 @@ Stack: Python 3.11 · FastAPI · XGBoost · SHAP · OpenRouter (provider-neutral
 
 `OPENROUTER_API_KEY` é **opcional** em todos os caminhos. Sem ela, a API responde normalmente com mensagens via **fallback determinístico** (template parametrizado). Com ela, as mensagens vêm do LLM real.
 
+> **Diretório de trabalho:** todos os comandos abaixo assumem que você está dentro de `prototype/`. Se você acabou de clonar o repo, faça `cd prototype` uma única vez antes de seguir.
+
 ---
 
 ## Configuração do `.env` e da chave do OpenRouter
@@ -38,7 +40,7 @@ Stack: Python 3.11 · FastAPI · XGBoost · SHAP · OpenRouter (provider-neutral
 ### 1. Crie o `.env` a partir do exemplo
 
 ```bash
-cp prototype/.env.example prototype/.env
+cp .env.example .env
 ```
 
 Conteúdo:
@@ -56,13 +58,13 @@ OPENROUTER_MODEL=anthropic/claude-haiku-4.5
 1. Crie conta em <https://openrouter.ai/>
 2. Acesse <https://openrouter.ai/keys> → **Create key**
 3. Adicione créditos em <https://openrouter.ai/credits>. Qualquer valor pequeno (US$ 1-5) já demonstra o protótipo várias centenas de vezes em Haiku
-4. Cole a chave em `prototype/.env`:
+4. Cole a chave em `.env`:
 
 ```dotenv
 OPENROUTER_API_KEY=sk-or-v1-...
 ```
 
-> O `.env` está em `prototype/.gitignore`. Nunca vai pro repo.
+> O `.env` está no `.gitignore`. Nunca vai pro repo.
 
 ### 3. Como cada caminho consome o `.env`
 
@@ -79,7 +81,6 @@ OPENROUTER_API_KEY=sk-or-v1-...
 Build da imagem treina o modelo internamente, então o container sobe pronto.
 
 ```bash
-cd prototype
 docker compose up --build
 ```
 
@@ -98,7 +99,6 @@ docker compose down
 ## Caminho 2. Local com `uv`
 
 ```bash
-cd prototype
 uv sync                                    # instala deps, cria .venv
 uv run python -m ingestion.generate_data   # gera dataset sintético
 uv run python -m ml.train                  # treina modelo + SHAP
@@ -126,7 +126,6 @@ uv run ruff check .
 Útil para validação rápida sem subir API.
 
 ```bash
-cd prototype
 uv sync
 uv run python -m ingestion.generate_data
 uv run python -m ml.train
