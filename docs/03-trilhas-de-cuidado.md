@@ -1,4 +1,4 @@
-# 03 — Trilhas de Cuidado por Perfil
+# 03. Trilhas de Cuidado por Perfil
 
 O case da Unimed apresenta três perfis de cuidado (crônicos, idosos, jovens) mas só detalha jornadas para dois (Júlia, 28 e Maria, 55). Esta proposta **preenche a lacuna do idoso** com a jornada do João, 72, e formaliza as três trilhas de forma comparável.
 
@@ -6,22 +6,22 @@ O case da Unimed apresenta três perfis de cuidado (crônicos, idosos, jovens) m
 
 Cada trilha responde a quatro perguntas:
 
-1. **O que se observa** — quais sinais entram (wearable, claims, PROMs, exames)
-2. **O que se decide** — qual modelo gera qual tipo de decisão (ML clássico vs GenAI)
-3. **O que se entrega** — qual ação, em qual canal, com qual tom
-4. **O que se mede** — KPI clínico, financeiro e de engajamento da trilha
+1. **O que se observa:** Quais sinais entram (wearable, claims, PROMs, exames)
+2. **O que se decide:** Qual modelo gera qual tipo de decisão (ML clássico vs GenAI)
+3. **O que se entrega:** Qual ação, em qual canal, com qual tom
+4. **O que se mede:** KPI clínico, financeiro e de engajamento da trilha
 
 A lógica não é "perfil → mensagem fixa". É **perfil → política de decisão**, e a política decide caso a caso a partir dos dados daquela pessoa.
 
 ---
 
-## Trilha 1 — Jovens saudáveis (persona: Júlia, 28)
+## Trilha 1. Jovens saudáveis (persona: Júlia, 28)
 
 > Designer gráfica em uma startup, vida ativa, sem condições crônicas conhecidas. Usa smartwatch e é digitalmente fluente.
 
 ### Hipótese clínica e financeira
 
-Beneficiários jovens hoje **subutilizam a operadora** — não fazem check-up, não percebem riscos silenciosos (pré-hipertensão, dislipidemia, saúde mental), e quando aparecem é em pronto-socorro caro. Investir em prevenção aqui custa pouco e evita coortes crônicas no futuro.
+Beneficiários jovens hoje **subutilizam a operadora**. Não fazem check-up, não percebem riscos silenciosos (pré-hipertensão, dislipidemia, saúde mental), e quando aparecem é em pronto-socorro caro. Investir em prevenção aqui custa pouco e evita coortes crônicas no futuro.
 
 ### O que se observa
 
@@ -34,7 +34,7 @@ Beneficiários jovens hoje **subutilizam a operadora** — não fazem check-up, 
 
 - **ML clássico** estima risco silencioso composto (pré-hipertensão, distúrbio de sono, sinais de burnout) a partir de séries temporais de wearable e PROMs.
 - **Modelo de propensão a engajamento** (ML) decide o melhor canal e horário (Júlia responde no fim de semana à noite? sexta à tarde?).
-- **GenAI** redige a mensagem com tom **leve, direto, não paternalista** — porque essa pessoa abandona se sentir que tá sendo "tratada como idosa".
+- **GenAI** redige a mensagem com tom **leve, direto, não paternalista**. Porque essa pessoa abandona se sentir que tá sendo "tratada como idosa".
 
 ### O que se entrega
 
@@ -54,7 +54,7 @@ Beneficiários jovens hoje **subutilizam a operadora** — não fazem check-up, 
 
 ---
 
-## Trilha 2 — Crônicos (persona: Maria, 55)
+## Trilha 2. Crônicos (persona: Maria, 55)
 
 > Hipertensa há dois anos, ambiente de trabalho estressante, baixa adesão a exercício. Toma medicação irregularmente.
 
@@ -72,8 +72,8 @@ Esse é o **maior gerador de sinistralidade evitável**: agudização de crônic
 ### O que se decide
 
 - **ML clássico (XGBoost/GBM):** estima **probabilidade de descompensação em 30/60/90 dias** com base em séries temporais e adesão. Saída em 3 níveis (verde/amarelo/vermelho) com SHAP explicando "por que esse paciente foi classificado assim".
-- **Regra clínica rígida:** se PA > limiar X em N leituras consecutivas, escalar imediatamente — não esperar modelo.
-- **GenAI:** compõe a mensagem com tom **apoiador, sem culpabilização**, e personaliza com o `top_features_shap` ("vimos que sua pressão tem subido no fim do dia — pode ser estresse no trabalho?").
+- **Regra clínica rígida:** se PA > limiar X em N leituras consecutivas, escalar imediatamente. Não esperar modelo.
+- **GenAI:** compõe a mensagem com tom **apoiador, sem culpabilização**, e personaliza com o `top_features_shap` ("vimos que sua pressão tem subido no fim do dia. Pode ser estresse no trabalho?").
 
 ### O que se entrega
 
@@ -94,18 +94,18 @@ Esse é o **maior gerador de sinistralidade evitável**: agudização de crônic
 
 ---
 
-## Trilha 3 — Idosos (persona: João, 72) ⚠️ *trilha que o PDF original não detalhou*
+## Trilha 3. Idosos (persona: João, 72) ⚠️ *trilha que o PDF original não detalhou*
 
 > Aposentado, viúvo há três anos, mora sozinho. Hipertenso e diabético, tem polifarmácia (5 medicamentos), mobilidade reduzida após queda em 2024. Fluência digital baixa.
 
 ### Hipótese clínica e financeira
 
-Idoso é o perfil de **maior custo médio per capita** e **maior risco de evento grave**. Mas é também o que **mais tem dificuldade com canais digitais**. Tratar idoso como "Júlia mais velha" é o erro mais comum em saúde digital — abandono total.
+Idoso é o perfil de **maior custo médio per capita** e **maior risco de evento grave**. Mas é também o que **mais tem dificuldade com canais digitais**. Tratar idoso como "Júlia mais velha" é o erro mais comum em saúde digital. Abandono total.
 
 A solução para esse perfil tem três peças que jovens e crônicos não precisam:
-1. **Cuidador no loop** — filho(a)/familiar autorizado recebe alertas relevantes (com consentimento explícito do beneficiário)
-2. **Atenção domiciliar** — visita de enfermagem em vez de "vai à clínica"
-3. **Suporte por voz, não tela** — ligação ativa, WhatsApp em texto curto, não app cheio de menus
+1. **Cuidador no loop:** Filho(a)/familiar autorizado recebe alertas relevantes (com consentimento explícito do beneficiário)
+2. **Atenção domiciliar:** Visita de enfermagem em vez de "vai à clínica"
+3. **Suporte por voz, não tela:** Ligação ativa, WhatsApp em texto curto, não app cheio de menus
 
 ### O que se observa
 
@@ -169,7 +169,7 @@ Toda transição é **evento auditável** e revisada pelo time clínico em ciclo
 
 ## O que isso prova ao avaliador
 
-1. **Leitura crítica do PDF** — identifiquei uma lacuna (trilha de idoso ausente) e preenchi com proposta concreta.
-2. **Profundidade clínica** — não usei jargão sem propósito; cada termo (PROMs, polifarmácia, Fried, Katz) está no lugar certo.
-3. **Personalização real** — três trilhas, três tons, três canais, três conjuntos de KPIs. Não é "uma jornada com perfil de cor".
-4. **Cuidador no loop** — diferencial que ninguém em PoCs de saúde digital costuma incluir, e que é decisivo para idoso.
+1. **Leitura crítica do PDF:** Identifiquei uma lacuna (trilha de idoso ausente) e preenchi com proposta concreta.
+2. **Profundidade clínica:** Não usei jargão sem propósito; cada termo (PROMs, polifarmácia, Fried, Katz) está no lugar certo.
+3. **Personalização real:** Três trilhas, três tons, três canais, três conjuntos de KPIs. Não é "uma jornada com perfil de cor".
+4. **Cuidador no loop:** Diferencial que ninguém em PoCs de saúde digital costuma incluir, e que é decisivo para idoso.

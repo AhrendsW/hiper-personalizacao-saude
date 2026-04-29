@@ -1,4 +1,4 @@
-# ADR 002 — FHIR R4 como modelo canônico de dados clínicos
+# ADR 002. FHIR R4 como modelo canônico de dados clínicos
 
 **Status:** aceito
 **Data:** 2026-04
@@ -29,7 +29,7 @@ Adotar **HL7 FHIR R4** como modelo canônico para todos os dados clínicos no si
 
 | Opção | Por que descartada |
 |---|---|
-| Schema próprio | Precisaríamos criar e manter ontologia clínica do zero — não justifica |
+| Schema próprio | Precisaríamos criar e manter ontologia clínica do zero. Não justifica |
 | HL7 v2 | Legado, menos estruturado, sucessor é justamente FHIR |
 | OpenEHR | Mais flexível mas adoção menor no Brasil; FHIR tem suporte regulatório explícito |
 
@@ -42,12 +42,12 @@ Adotar **HL7 FHIR R4** como modelo canônico para todos os dados clínicos no si
 - Portabilidade nativa para cumprir art. 18 LGPD
 
 **Negativas:**
-- FHIR é verboso — exige cuidado com performance
+- FHIR é verboso. Exige cuidado com performance
 - Mapeamento de fontes legadas tem custo inicial
 - Versão (R4 vs R5) precisa ser fixada e atualizada com cuidado
 
 ## Notas de implementação
 
-- Bronze mantém payload original — FHIR é canônico no silver
+- Bronze mantém payload original. FHIR é canônico no silver
 - Validador FHIR rodando na promoção bronze → silver, com DLQ para inválidos
 - Identificadores (`Patient.identifier`) seguem catálogo nacional (CPF, CNS) para MDM

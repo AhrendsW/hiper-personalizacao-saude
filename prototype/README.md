@@ -1,4 +1,4 @@
-# Protótipo — fatia vertical executável
+# Protótipo. Fatia vertical executável
 
 > **wearable + claims sintético → ML decide risco → GenAI compõe mensagem → API entrega**
 
@@ -10,9 +10,9 @@ Stack: Python 3.11 · FastAPI · XGBoost · SHAP · OpenRouter (provider-neutral
 
 1. [Pré-requisitos por caminho](#pré-requisitos-por-caminho)
 2. [Configuração do `.env` e da chave do OpenRouter](#configuração-do-env-e-da-chave-do-openrouter)
-3. [Caminho 1 — Docker (recomendado)](#caminho-1--docker-recomendado)
-4. [Caminho 2 — Local com `uv`](#caminho-2--local-com-uv)
-5. [Caminho 3 — CLI / scripts diretos](#caminho-3--cli--scripts-diretos)
+3. [Caminho 1. Docker (recomendado)](#caminho-1--docker-recomendado)
+4. [Caminho 2. Local com `uv`](#caminho-2--local-com-uv)
+5. [Caminho 3. CLI / scripts diretos](#caminho-3--cli--scripts-diretos)
 6. [Como testar a API](#como-testar-a-api)
 7. [Trocar de modelo de LLM](#trocar-de-modelo-de-llm)
 8. [Estrutura do código](#estrutura-do-código)
@@ -55,26 +55,26 @@ OPENROUTER_MODEL=anthropic/claude-haiku-4.5
 
 1. Crie conta em <https://openrouter.ai/>
 2. Acesse <https://openrouter.ai/keys> → **Create key**
-3. Adicione créditos em <https://openrouter.ai/credits> — qualquer valor pequeno (US$ 1-5) já demonstra o protótipo várias centenas de vezes em Haiku
+3. Adicione créditos em <https://openrouter.ai/credits>. Qualquer valor pequeno (US$ 1-5) já demonstra o protótipo várias centenas de vezes em Haiku
 4. Cole a chave em `prototype/.env`:
 
 ```dotenv
 OPENROUTER_API_KEY=sk-or-v1-...
 ```
 
-> O `.env` está em `prototype/.gitignore` — nunca vai pro repo.
+> O `.env` está em `prototype/.gitignore`. Nunca vai pro repo.
 
 ### 3. Como cada caminho consome o `.env`
 
 | Caminho | Como o `.env` é lido |
 |---|---|
 | **Docker** | `docker-compose.yml` interpola `${OPENROUTER_API_KEY}` automaticamente a partir do `.env` no diretório do compose |
-| **uv local** | `api/main.py` chama `load_dotenv()` no startup — lê `.env` do diretório atual |
+| **uv local** | `api/main.py` chama `load_dotenv()` no startup. Lê `.env` do diretório atual |
 | **CLI** | Igual ao uv local. Ou exporta no shell: `export OPENROUTER_API_KEY=sk-or-v1-...` |
 
 ---
 
-## Caminho 1 — Docker (recomendado)
+## Caminho 1. Docker (recomendado)
 
 Build da imagem treina o modelo internamente, então o container sobe pronto.
 
@@ -95,7 +95,7 @@ docker compose down
 
 ---
 
-## Caminho 2 — Local com `uv`
+## Caminho 2. Local com `uv`
 
 ```bash
 cd prototype
@@ -121,7 +121,7 @@ uv run ruff check .
 
 ---
 
-## Caminho 3 — CLI / scripts diretos
+## Caminho 3. CLI / scripts diretos
 
 Útil para validação rápida sem subir API.
 
@@ -148,7 +148,7 @@ features = {
 print(predict(features))
 ```
 
-Notebook didático em [`notebooks/01-eda-e-treino.ipynb`](notebooks/01-eda-e-treino.ipynb) — abra com:
+Notebook didático em [`notebooks/01-eda-e-treino.ipynb`](notebooks/01-eda-e-treino.ipynb). Abra com:
 
 ```bash
 uv run --with jupyter jupyter lab notebooks/
@@ -159,7 +159,7 @@ uv run --with jupyter jupyter lab notebooks/
 ## Como testar a API
 
 ### Pelo Swagger
-<http://localhost:8000/docs> — clique em `POST /score`, **Try it out**, cole o conteúdo de qualquer arquivo em `samples/` e **Execute**.
+<http://localhost:8000/docs>. Clique em `POST /score`, **Try it out**, cole o conteúdo de qualquer arquivo em `samples/` e **Execute**.
 
 ### Por curl
 
@@ -202,7 +202,7 @@ curl -X POST localhost:8000/event -H 'Content-Type: application/json' -d '{
 A arquitetura é **provider-neutral via OpenRouter**. Trocar de modelo é só uma variável de ambiente:
 
 ```dotenv
-OPENROUTER_MODEL=anthropic/claude-haiku-4.5     # default — equilíbrio qualidade/custo
+OPENROUTER_MODEL=anthropic/claude-haiku-4.5     # default, equilíbrio qualidade/custo
 # OPENROUTER_MODEL=openai/gpt-4o-mini             # mais barato
 # OPENROUTER_MODEL=google/gemini-flash-1.5        # latência baixa
 # OPENROUTER_MODEL=meta-llama/llama-3.3-70b-instruct  # open source
@@ -210,7 +210,7 @@ OPENROUTER_MODEL=anthropic/claude-haiku-4.5     # default — equilíbrio qualid
 
 Lista completa em <https://openrouter.ai/models>.
 
-> Sem `OPENROUTER_API_KEY`, o sistema cai em **fallback determinístico** — beneficiário recebe mensagem mais genérica, mas a jornada não trava. Princípio de "falha segura" em saúde.
+> Sem `OPENROUTER_API_KEY`, o sistema cai em **fallback determinístico**. Beneficiário recebe mensagem mais genérica, mas a jornada não trava. Princípio de "falha segura" em saúde.
 
 ---
 
@@ -249,7 +249,7 @@ prototype/
 
 ```
 POST /score (payload Pydantic validado)
-  └→ extrai features (mesmo módulo do treino — sem skew)
+  └→ extrai features (mesmo módulo do treino, sem skew)
   └→ ML clássico (XGBoost) classifica em verde/amarelo/vermelho com prob calibrada
   └→ SHAP TreeExplainer extrai top-3 features explicativas
   └→ orquestrador decide ação + canal + prioridade + requires_human por trilha

@@ -38,7 +38,7 @@ Detalhes completos de setup (Docker, uv local, CLI), configuração do `.env`, o
 | Arquitetura ponta a ponta (C4) | [`docs/02-arquitetura.md`](docs/02-arquitetura.md) |
 | Trilhas de cuidado por perfil (Júlia, Maria, João) | [`docs/03-trilhas-de-cuidado.md`](docs/03-trilhas-de-cuidado.md) |
 | Dados, LGPD, ANS, CFM, segurança | [`docs/04-dados-e-conformidade.md`](docs/04-dados-e-conformidade.md) |
-| Estratégia de IA — ML clássico vs GenAI | [`docs/05-estrategia-ia.md`](docs/05-estrategia-ia.md) |
+| Estratégia de IA. ML clássico vs GenAI | [`docs/05-estrategia-ia.md`](docs/05-estrategia-ia.md) |
 | Mensuração de efetividade e engajamento | [`docs/06-mensuracao.md`](docs/06-mensuracao.md) |
 | Modelo de negócio, escalabilidade, times | [`docs/07-modelo-de-negocio.md`](docs/07-modelo-de-negocio.md) |
 | Como o `/score` é consumido em produção | [`docs/08-integracao-em-producao.md`](docs/08-integracao-em-producao.md) |
@@ -48,12 +48,12 @@ Detalhes completos de setup (Docker, uv local, CLI), configuração do `.env`, o
 
 ## Diferenciais da proposta
 
-- **ML onde decide, GenAI onde comunica** — escolha técnica justificada em [`docs/05`](docs/05-estrategia-ia.md), evitando o anti-padrão de usar LLM para classificação tabular em saúde.
-- **Conformidade por design** — LGPD, ANS e CFM tratados como requisito de arquitetura, não como anexo.
-- **Três trilhas de cuidado** — jovens (Júlia, 28), crônicos (Maria, 55) e idosos (João, 72), com cuidador no loop e atenção domiciliar para idosos.
-- **Mensuração dupla** — saúde do paciente *e* sinistralidade da operadora, lado a lado.
-- **Provider-neutral** — GenAI via OpenRouter (default `anthropic/claude-haiku-4.5`), trocável para qualquer modelo via env var.
-- **Protótipo demonstrável** — `docker compose up` e em segundos a stack completa responde com ML real e GenAI real.
+- **ML onde decide, GenAI onde comunica:** Escolha técnica justificada em [`docs/05`](docs/05-estrategia-ia.md), evitando o anti-padrão de usar LLM para classificação tabular em saúde.
+- **Conformidade por design:** LGPD, ANS e CFM tratados como requisito de arquitetura, não como anexo.
+- **Três trilhas de cuidado:** Jovens (Júlia, 28), crônicos (Maria, 55) e idosos (João, 72), com cuidador no loop e atenção domiciliar para idosos.
+- **Mensuração dupla:** Saúde do paciente *e* sinistralidade da operadora, lado a lado.
+- **Provider-neutral:** GenAI via OpenRouter (default `anthropic/claude-haiku-4.5`), trocável para qualquer modelo via env var.
+- **Protótipo demonstrável:** `docker compose up` e em segundos a stack completa responde com ML real e GenAI real.
 
 ## Cobertura por eixo técnico
 

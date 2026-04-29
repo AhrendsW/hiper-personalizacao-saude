@@ -1,4 +1,4 @@
-# ADR 006 — Temporal para orquestração de jornadas
+# ADR 006. Temporal para orquestração de jornadas
 
 **Status:** aceito
 **Data:** 2026-04
@@ -24,18 +24,18 @@ Usar **Temporal** (workflow engine durável, código-como-workflow) para orquest
 
 ## Por que Temporal especificamente
 
-- **Durabilidade** — workflow continua exatamente onde parou após deploy/falha
-- **Código-como-workflow** — mesmo Python/TypeScript que o resto do backend, sem DSL externa
+- **Durabilidade:** Workflow continua exatamente onde parou após deploy/falha
+- **Código-como-workflow:** Mesmo Python/TypeScript que o resto do backend, sem DSL externa
 - **Retries e timeouts declarativos** por activity
-- **Versionamento de workflow** — deploys sem quebrar jornadas em curso
-- **Visibilidade** nativa — UI mostra estado de cada jornada
-- **Sinais e queries** — interage com jornada ativa (responder consentimento, escalar para humano)
+- **Versionamento de workflow:** Deploys sem quebrar jornadas em curso
+- **Visibilidade** nativa. UI mostra estado de cada jornada
+- **Sinais e queries:** Interage com jornada ativa (responder consentimento, escalar para humano)
 
 ## Consequências
 
 **Positivas:**
 - Jornada longa robusta a falha e deploy
-- Auditoria — cada execução tem trace completo
+- Auditoria. Cada execução tem trace completo
 - Reduz bug de "estado perdeu sincronia"
 - Padrão claro para time
 

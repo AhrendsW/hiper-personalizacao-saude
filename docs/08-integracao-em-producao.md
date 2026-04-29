@@ -1,4 +1,4 @@
-# 08 — Integração em Produção: como o `/score` é consumido de verdade
+# 08. Integração em Produção: como o `/score` é consumido de verdade
 
 > No protótipo o `/score` é chamado por `curl @samples/maria.json`. Em produção, ninguém manda `curl` em milhões de pacientes. Este documento descreve **quem chama**, **com que dados**, **com que frequência** e **o que faz com a resposta**.
 
@@ -40,19 +40,19 @@ flowchart LR
 
 A plataforma é chamada em **quatro contextos** distintos. O endpoint é o mesmo, mas o **gatilho**, a **frequência** e o **consumidor da resposta** mudam.
 
-### Modo 1 — Streaming reativo (wearable)
+### Modo 1. Streaming reativo (wearable)
 
 | | |
 |---|---|
 | **Gatilho** | Beneficiário envia leitura do wearable (PA, FC, sono) |
-| **Frequência** | A cada 1–5 min por usuário ativo (~2.700 ev/s sustentados em 4,6M) |
-| **Caminho** | Wearable API → Kafka → stream consumer → janela móvel (24h–7d) → cruza limiar → `/score` |
+| **Frequência** | A cada 1 a 5 min por usuário ativo (~2.700 ev/s sustentados em 4,6M) |
+| **Caminho** | Wearable API → Kafka → stream consumer → janela móvel (24h a 7d) → cruza limiar → `/score` |
 | **Latência alvo** | < 1 min do dado bruto até o output |
-| **Consumidor** | Orquestrador Temporal — se classe muda ou risco vermelho, dispara workflow |
+| **Consumidor** | Orquestrador Temporal. Se classe muda ou risco vermelho, dispara workflow |
 
 **Exemplo:** Maria mede pressão duas vezes em uma hora e a média de 24h ultrapassa o limiar configurado para sua coorte → consumer chama `/score` → retorna vermelho → Temporal dispara `ChronicEscalationWorkflow` que aciona telemedicina.
 
-### Modo 2 — Batch noturno populacional
+### Modo 2. Batch noturno populacional
 
 | | |
 |---|---|
@@ -64,7 +64,7 @@ A plataforma é chamada em **quatro contextos** distintos. O endpoint é o mesmo
 
 **Exemplo:** noite passa, scoring roda em todos os crônicos. Pela manhã, equipe de enfermagem vê 320 casos vermelho na fila ordenados por SLA, com mensagem já pré-aprovada pelo workflow.
 
-### Modo 3 — Trigger por evento clínico
+### Modo 3. Trigger por evento clínico
 
 | | |
 |---|---|
@@ -76,7 +76,7 @@ A plataforma é chamada em **quatro contextos** distintos. O endpoint é o mesmo
 
 **Exemplo:** João tem alta hospitalar com diagnóstico de descompensação cardíaca → adapter recebe evento FHIR `Encounter.discharged` → `/score` retorna vermelho → workflow agenda telemed em 24h e visita domiciliar em 72h.
 
-### Modo 4 — Sob demanda (médico/atendente)
+### Modo 4. Sob demanda (médico/atendente)
 
 | | |
 |---|---|
@@ -84,11 +84,11 @@ A plataforma é chamada em **quatro contextos** distintos. O endpoint é o mesmo
 | **Frequência** | Variável, picos diurnos |
 | **Caminho** | Painel do médico → backend chama `/score` com `patient_id` → renderiza recomendação, top features e mensagem sugerida |
 | **Latência alvo** | < 200 ms p99 |
-| **Consumidor** | Médico — aceita, edita ou rejeita; feedback alimenta avaliação contínua |
+| **Consumidor** | Médico. Aceita, edita ou rejeita; feedback alimenta avaliação contínua |
 
-**Exemplo:** cardiologista abre paciente no painel → vê *"Risco vermelho — pressão sistólica e adesão são os fatores mais relevantes nos últimos 30 dias"* → ajusta a sugestão → aprova envio.
+**Exemplo:** cardiologista abre paciente no painel → vê *"Risco vermelho. Pressão sistólica e adesão são os fatores mais relevantes nos últimos 30 dias"* → ajusta a sugestão → aprova envio.
 
-## Fluxo de dados (não é payload — é feature)
+## Fluxo de dados (não é payload. É feature)
 
 No protótipo o cliente **manda** o payload via JSON. Em produção:
 
@@ -113,7 +113,7 @@ POST /score
 
 Features são buscadas no Feast online com `as_of` correto. Sem leakage temporal, sem skew treino-inferência.
 
-## Sequência ponta a ponta — jornada da Maria
+## Sequência ponta a ponta. Jornada da Maria
 
 ```mermaid
 sequenceDiagram
@@ -167,7 +167,7 @@ sequenceDiagram
 
 ### BI e governança
 - Eventos `score_decision` agregados por coorte, região, modelo, drift, fairness
-- Painéis clínico, executivo, de produto e de IA — ver `docs/06-mensuracao.md`
+- Painéis clínico, executivo, de produto e de IA. Ver `docs/06-mensuracao.md`
 
 ## Quem invoca quem
 
@@ -218,9 +218,9 @@ sequenceDiagram
 
 O protótipo demonstra a **fatia vertical de decisão**. A produção adiciona:
 
-1. **Camada de coleta e materialização de features** — sem ela, nenhum modo acima funciona em escala
-2. **Orquestração durável** — sem ela, jornadas longas de cuidado se perdem em deploy/falha
-3. **Múltiplos modos de invocação** — sem isso, ninguém usa o `/score` (ele só responde se for chamado)
-4. **Observabilidade do ciclo completo** — sem isso, não há mensuração nem governança
+1. **Camada de coleta e materialização de features:** Sem ela, nenhum modo acima funciona em escala
+2. **Orquestração durável:** Sem ela, jornadas longas de cuidado se perdem em deploy/falha
+3. **Múltiplos modos de invocação:** Sem isso, ninguém usa o `/score` (ele só responde se for chamado)
+4. **Observabilidade do ciclo completo:** Sem isso, não há mensuração nem governança
 
 Cada um desses pontos tem ADR correspondente (ver `docs/adr/`) e é detalhado na arquitetura-alvo (`infra/architecture-target.md`).

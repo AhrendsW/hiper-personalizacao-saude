@@ -1,11 +1,11 @@
-# ADR 003 — ML clássico para decisão clínica e financeira
+# ADR 003. ML clássico para decisão clínica e financeira
 
 **Status:** aceito
 **Data:** 2026-04
 
 ## Contexto
 
-Há tentação de usar LLM para tudo — incluindo decisões de classificação e regressão sobre dado tabular (risco, propensão, sinistralidade). Em saúde, essa decisão tem consequências regulatórias, financeiras e de segurança.
+Há tentação de usar LLM para tudo. Incluindo decisões de classificação e regressão sobre dado tabular (risco, propensão, sinistralidade). Em saúde, essa decisão tem consequências regulatórias, financeiras e de segurança.
 
 ## Decisão
 
@@ -37,7 +37,7 @@ Toda **decisão clínica ou financeira de classificação/regressão** sobre dad
 - Custo previsível e baixo
 - Auditoria clínica possível (model card, SHAP)
 - Fairness mensurável e gateável
-- Estabilidade — mesmo input, mesma saída
+- Estabilidade. Mesmo input, mesma saída
 
 **Negativas:**
 - Exige pipeline de feature engineering tradicional

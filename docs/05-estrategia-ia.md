@@ -1,7 +1,7 @@
-# 05 — Estratégia de IA
+# 05. Estratégia de IA
 
 > **Tese central:** ML clássico onde a IA **decide**, GenAI onde a IA **comunica**.
-> Em saúde, essa separação não é estilística — é regulatória, financeira e de segurança.
+> Em saúde, essa separação não é estilística. É regulatória, financeira e de segurança.
 
 ## Resumo executivo
 
@@ -21,17 +21,17 @@
 - **Modelo:** XGBoost / LightGBM em features tabulares (wearable agregado, claims, EHR estruturado)
 - **Saída:** classe de risco (verde/amarelo/vermelho) + probabilidade calibrada (Platt/Isotônica)
 - **Explicabilidade:** SHAP por predição → lista as 3-5 features que mais empurraram o paciente para aquela classe
-- **Por que não LLM:** dado tabular com forte sinal numérico; LLM teria custo proibitivo, latência maior e zero auditabilidade — sem ganho de qualidade
+- **Por que não LLM:** dado tabular com forte sinal numérico; LLM teria custo proibitivo, latência maior e zero auditabilidade. Sem ganho de qualidade
 
 ### 2. Predição de evento clínico
 - **Modelos por janela:** descompensação em 30/60/90 dias, internação em 90 dias, queda em 30 dias (idosos)
 - **Treino supervisionado** com horizonte temporal e validação **time-based**, não k-fold ingênuo
-- **Calibração** é mais importante que acurácia bruta — operação clínica precisa de probabilidade confiável para definir gatilhos
+- **Calibração** é mais importante que acurácia bruta. Operação clínica precisa de probabilidade confiável para definir gatilhos
 
 ### 3. Propensão a engajamento
 - **Modelo:** classificador binário ou de uplift (se eu mando push agora vs não mando, o que muda?)
 - **Saída:** probabilidade de resposta por canal × horário × tom
-- **Treina-se com eventos de engajamento históricos** — leitura, clique, ação executada
+- **Treina-se com eventos de engajamento históricos:** Leitura, clique, ação executada
 - **Uso:** orquestrador escolhe canal/horário com maior expected response
 
 ### 4. Modelagem de sinistralidade
@@ -49,12 +49,12 @@
 ### 2. Copiloto clínico
 - **Caso:** médico abre prontuário do paciente → copiloto resume últimos 12 meses, destaca mudanças relevantes, sugere hipóteses
 - **Padrão:** sempre **com citação** ao trecho do prontuário que originou a afirmação
-- **Saída sempre revisável** — médico aceita, edita ou rejeita; feedback alimenta avaliação contínua
+- **Saída sempre revisável:** Médico aceita, edita ou rejeita; feedback alimenta avaliação contínua
 
 ### 3. RAG sobre protocolos e diretrizes
 - **Conteúdo indexado:** protocolos clínicos da Unimed, diretrizes de sociedades médicas (SBC, SBD, SBGG), bulários, manuais ANS
 - **Consulta:** médico pergunta em linguagem natural, recebe resposta com **citações verificáveis**
-- **Não substitui referência** — facilita o acesso
+- **Não substitui referência:** Facilita o acesso
 
 ### 4. Extração de dados não estruturados
 - **Caso:** anamnese livre → estrutura em campos FHIR. Áudio de call center → transcrição + categorização.
@@ -83,9 +83,9 @@ A tarefa é classificação/regressão sobre dado estruturado?
 - **Frameworks:** scikit-learn, XGBoost, LightGBM, CatBoost
 - **Validação:** holdout temporal + cross-validation time-based
 - **Interpretabilidade:** SHAP (por predição e global), Partial Dependence, calibração visual
-- **Auditoria de fairness:** Aequitas / Fairlearn — gate de promoção
+- **Auditoria de fairness:** Aequitas / Fairlearn. Gate de promoção
 - **Servir:** BentoML, FastAPI, ou serviço gerenciado (SageMaker / Vertex AI)
-- **Feature Store:** Feast — garante que treino e inferência usam mesma feature
+- **Feature Store:** Feast. Garante que treino e inferência usam mesma feature
 
 ### GenAI
 - **Gateway provider-neutral:** OpenRouter no protótipo (default `anthropic/claude-haiku-4.5`,
@@ -93,8 +93,8 @@ A tarefa é classificação/regressão sobre dado estruturado?
   Em produção, LiteLLM ou camada própria com a mesma ideia, e roteamento por tarefa
   (Haiku-class para mensagem, Sonnet/Opus para copiloto clínico complexo).
 - **Provedor secundário:** open-weights via vLLM para cenários de soberania ou custo
-- **Roteamento:** LiteLLM ou camada própria — escolhe modelo por tarefa, custo e SLA
-- **Cache semântico** para perguntas recorrentes — corta custo significativamente
+- **Roteamento:** LiteLLM ou camada própria. Escolhe modelo por tarefa, custo e SLA
+- **Cache semântico** para perguntas recorrentes. Corta custo significativamente
 - **Avaliação contínua:** golden set de exemplos validados clinicamente, regressão automática a cada mudança
 
 ## MLOps
@@ -142,24 +142,24 @@ Modelo só vai a produção se:
 | **Auditoria** | Log imutável de prompt + resposta + decisão, por usuário, por finalidade |
 | **Humano no loop** | Toda saída clínica passa por médico antes de afetar o cuidado |
 
-## Questão norteadora — "Como incentivar o uso de IA na personalização"
+## Questão norteadora. "Como incentivar o uso de IA na personalização"
 
 Resposta direta:
 
 1. **Mostrar valor para o profissional primeiro.** Médico que vê o copiloto resumir 50 páginas de prontuário em 30 segundos vira advogado interno da plataforma.
 2. **Transparência radical.** Cada decisão da IA tem explicação acessível ("o modelo destacou estes 3 fatores"). Caixa-preta gera resistência.
-3. **Mensuração clínica visível.** Painéis mostrando "estes pacientes evitaram internação após intervenção" — incentivo é resultado mensurável.
+3. **Mensuração clínica visível.** Painéis mostrando "estes pacientes evitaram internação após intervenção" tornam o incentivo concreto e mensurável.
 4. **Guardrails que protegem o usuário.** A confiança vem do limite explícito ("isto não substitui orientação médica"), não da promessa.
 5. **Iteração rápida com clínicos.** Time clínico no design de prompts, no rótulo de dataset, no model card.
 
 ## Anti-padrões evitados nesta proposta
 
-1. **Usar LLM para classificação tabular** — caro, lento, opaco, sem ganho.
-2. **GenAI prescrevendo conduta** — risco regulatório e clínico inaceitável.
-3. **Modelo único multitask para tudo** — fica medíocre em todas. Modelos especializados por caso.
-4. **Métrica única (AUC) como gate** — em saúde, calibração e fairness importam tanto quanto.
-5. **"Vamos coletar dado e ver no que dá"** — sem hipótese clínica, modelo vira firula.
+1. **Usar LLM para classificação tabular:** Caro, lento, opaco, sem ganho.
+2. **GenAI prescrevendo conduta:** Risco regulatório e clínico inaceitável.
+3. **Modelo único multitask para tudo:** Fica medíocre em todas. Modelos especializados por caso.
+4. **Métrica única (AUC) como gate:** Em saúde, calibração e fairness importam tanto quanto.
+5. **"Vamos coletar dado e ver no que dá":** Sem hipótese clínica, modelo vira firula.
 
 ## Sumário
 
-A estratégia escolhe o tipo certo de IA para cada problema, com auditabilidade onde decide e com guardrails onde se comunica. O resultado é uma plataforma onde **a IA aumenta o profissional de saúde sem substituí-lo**, **comunica com o beneficiário no tom certo**, e **é auditável o suficiente para passar em fiscalização** — clínica, regulatória ou interna.
+A estratégia escolhe o tipo certo de IA para cada problema, com auditabilidade onde decide e com guardrails onde se comunica. O resultado é uma plataforma onde **a IA aumenta o profissional de saúde sem substituí-lo**, **comunica com o beneficiário no tom certo**, e **é auditável o suficiente para passar em fiscalização**. Clínica, regulatória ou interna.

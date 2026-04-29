@@ -2,9 +2,9 @@
 
 ADRs documentam **decisões arquiteturais com consequência durável**. Cada uma segue o template:
 
-- **Contexto** — qual problema motivou a decisão
-- **Decisão** — o que foi escolhido
-- **Consequências** — o que se ganha e o que se perde
+- **Contexto:** Qual problema motivou a decisão
+- **Decisão:** O que foi escolhido
+- **Consequências:** O que se ganha e o que se perde
 
 | ADR | Decisão |
 |---|---|

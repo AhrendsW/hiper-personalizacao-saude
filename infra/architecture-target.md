@@ -59,7 +59,7 @@ flowchart TB
 ### Batch (EHR, claims, cadastrais)
 - **Airflow** com DAGs idempotentes
 - **Spark** (EMR/Glue/Databricks) para transformações pesadas
-- Adapters por parceiro (cada hospital pode ter EHR diferente — FHIR adapter por origem)
+- Adapters por parceiro (cada hospital pode ter EHR diferente. FHIR adapter por origem)
 - `great_expectations` validando schema e regras de negócio antes de promover bronze → silver
 
 ### Identidade do paciente (MDM)
@@ -114,7 +114,7 @@ flowchart TB
 
 ## 6. Orquestração
 
-- **Temporal** (auto-gerenciado ou Cloud) — ADR 006
+- **Temporal** (auto-gerenciado ou Cloud). ADR 006
 - Cada jornada é workflow versionado
 - Sinais externos: consentimento revogado, alta hospitalar, escalonamento manual
 - Queries: "qual estado atual da jornada deste paciente?"
@@ -185,7 +185,7 @@ flowchart TB
 ## Por que o gap importa
 
 > O protótipo é a **prova de viabilidade técnica**. Esta arquitetura-alvo é a **engenharia que sustenta operação real**.
-> Avaliador entende que **eu sei a diferença** — e por isso o repositório é honesto sobre o que tá no protótipo e o que ficou pra produção.
+> Avaliador entende que **eu sei a diferença**. E por isso o repositório é honesto sobre o que tá no protótipo e o que ficou pra produção.
 
 ## Roadmap de implementação (alto nível)
 

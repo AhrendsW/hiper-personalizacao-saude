@@ -1,4 +1,4 @@
-# ADR 001 — Lakehouse como backbone de dados
+# ADR 001. Lakehouse como backbone de dados
 
 **Status:** aceito
 **Data:** 2026-04
@@ -6,9 +6,9 @@
 ## Contexto
 
 A solução precisa armazenar três tipos de dados:
-1. **Dados estruturados de claims e cadastrais** (TUSS, ANS) — bem comportados, alto valor analítico
-2. **Dados clínicos semiestruturados** (FHIR vindo de EHR) — schema evolui, varia por parceiro
-3. **Sinais contínuos de wearable** (séries temporais) — alto volume, baixa estrutura
+1. **Dados estruturados de claims e cadastrais** (TUSS, ANS). Bem comportados, alto valor analítico
+2. **Dados clínicos semiestruturados** (FHIR vindo de EHR). Schema evolui, varia por parceiro
+3. **Sinais contínuos de wearable** (séries temporais). Alto volume, baixa estrutura
 
 Volume estimado: 4,6M beneficiários × 50 eventos/dia = ~2.700 eventos/s sustentados, com batch noturno de claims/EHR.
 
@@ -44,7 +44,7 @@ Warehouse de BI gerenciado (BigQuery/Snowflake/Redshift) consome do Gold quando 
 
 **Negativas:**
 - Operação de lakehouse exige expertise (manutenção de tabelas, otimização de partições)
-- Latência mais alta que warehouse para certos painéis — mitigado com gold pré-agregado
+- Latência mais alta que warehouse para certos painéis. Mitigado com gold pré-agregado
 - Curva de aprendizado para times acostumados com warehouse tradicional
 
 ## Consequências de conformidade

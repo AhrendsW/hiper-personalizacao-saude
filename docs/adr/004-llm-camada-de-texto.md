@@ -1,4 +1,4 @@
-# ADR 004 — LLM apenas em camadas de texto e raciocínio
+# ADR 004. LLM apenas em camadas de texto e raciocínio
 
 **Status:** aceito
 **Data:** 2026-04
@@ -11,11 +11,11 @@ LLM é poderoso em linguagem, mas tem riscos específicos em saúde: alucinaçã
 
 LLM (Claude prioritariamente) é aplicado em:
 
-1. **Comunicação personalizada com beneficiário** — recebe persona + decisão do ML clássico + features explicativas e compõe mensagem
-2. **Copiloto clínico** — resumo de prontuário, sugestão de hipóteses, com citação verificável
-3. **RAG sobre protocolos** — médico pergunta, modelo responde com citação de fonte
-4. **Extração de dados não estruturados** — anamnese livre / áudio → FHIR estruturado, com validação de schema
-5. **Chatbot de engajamento** — dúvidas simples, allowlist de tópicos, escalonamento para humano em casos complexos
+1. **Comunicação personalizada com beneficiário:** Recebe persona + decisão do ML clássico + features explicativas e compõe mensagem
+2. **Copiloto clínico:** Resumo de prontuário, sugestão de hipóteses, com citação verificável
+3. **RAG sobre protocolos:** Médico pergunta, modelo responde com citação de fonte
+4. **Extração de dados não estruturados:** Anamnese livre / áudio → FHIR estruturado, com validação de schema
+5. **Chatbot de engajamento:** Dúvidas simples, allowlist de tópicos, escalonamento para humano em casos complexos
 
 ## Não é usado para
 
@@ -44,11 +44,11 @@ por env var, sem mudança de código.
 
 ## Roteamento por classe de modelo
 
-- **Haiku-class** (Claude Haiku, GPT-4o-mini, Gemini Flash) — extração
+- **Haiku-class** (Claude Haiku, GPT-4o-mini, Gemini Flash). Extração
   simples, classificação leve, comunicação personalizada padrão
-- **Sonnet-class** (Claude Sonnet, GPT-4o, Gemini Pro) — copiloto leve,
+- **Sonnet-class** (Claude Sonnet, GPT-4o, Gemini Pro). Copiloto leve,
   geração com mais contexto
-- **Opus-class** (Claude Opus, GPT-4 Turbo) — copiloto clínico complexo,
+- **Opus-class** (Claude Opus, GPT-4 Turbo). Copiloto clínico complexo,
   raciocínio sobre histórico longo
 
 Critério: tarefa mais barata possível que entrega qualidade aceitável
@@ -63,11 +63,11 @@ Critério: tarefa mais barata possível que entrega qualidade aceitável
 
 **Negativas:**
 - Operação adicional (gateway, cache, observabilidade de prompts)
-- Risco residual de alucinação — mitigado por validador e humano no loop
-- Dependência de provider externo — mitigada por capacidade de trocar e fallback determinístico
+- Risco residual de alucinação. Mitigado por validador e humano no loop
+- Dependência de provider externo. Mitigada por capacidade de trocar e fallback determinístico
 
 ## Fallback determinístico
 
 Quando LLM está indisponível ou retorna conteúdo que não passa em validação:
 - Mensagem por **template parametrizado** baseado em persona + risco + features
-- Beneficiário recebe mensagem mais genérica, mas recebe — não trava jornada
+- Beneficiário recebe mensagem mais genérica, mas recebe. Não trava jornada

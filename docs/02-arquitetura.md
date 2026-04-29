@@ -1,9 +1,9 @@
-# 02 — Arquitetura Ponta a Ponta
+# 02. Arquitetura Ponta a Ponta
 
 > Este documento apresenta **duas arquiteturas** lado a lado:
 >
-> 1. **Arquitetura atual** — o que existe hoje no protótipo, executável.
-> 2. **Arquitetura-alvo** — o que esta plataforma se torna em produção para 4,6M de beneficiários.
+> 1. **Arquitetura atual**. O que existe hoje no protótipo, executável.
+> 2. **Arquitetura-alvo**. O que esta plataforma se torna em produção para 4,6M de beneficiários.
 >
 > Para cada uma: **o que atende, qual problema resolve, como faz e por que faz**. O detalhamento técnico (camadas, ADRs, capacidade) vem depois.
 
@@ -49,10 +49,10 @@ flowchart LR
 
 | Pergunta | Resposta |
 |---|---|
-| **O que atende** | Demonstração executável de uma fatia vertical: dado clínico simulado entra, modelo decide risco, GenAI compõe mensagem, API entrega — em segundos, sem dependência de infraestrutura externa. |
+| **O que atende** | Demonstração executável de uma fatia vertical: dado clínico simulado entra, modelo decide risco, GenAI compõe mensagem, API entrega. Em segundos, sem dependência de infraestrutura externa. |
 | **Qual problema resolve** | Prova material de que a tese "ML decide, GenAI comunica" funciona em saúde. Permite que o avaliador rode `docker compose up` e veja as três personas (Júlia, Maria, João) saírem com mensagens coerentes, top features SHAP e decisão por trilha. |
 | **Como faz** | Dataset sintético gerado por script com correlações clínicas plausíveis. Modelo XGBoost multiclasse treinado durante o build da imagem. SHAP TreeExplainer em cada predição. Orquestrador é tabela declarativa `(perfil × risco) → ação`. GenAI via OpenRouter (default Claude Haiku) com fallback determinístico. Tudo em um único processo Python. |
-| **Por que faz assim** | Simplicidade. O objetivo do protótipo é provar que a arquitetura é factível e o fluxo de dados encaixa, não suportar produção real. Cada peça que está aqui é a versão **mínima** do que estaria em produção — e está claramente isolada para que a substituição por produção não quebre o contrato. |
+| **Por que faz assim** | Simplicidade. O objetivo do protótipo é provar que a arquitetura é factível e o fluxo de dados encaixa, não suportar produção real. Cada peça que está aqui é a versão **mínima** do que estaria em produção. E está claramente isolada para que a substituição por produção não quebre o contrato. |
 
 ### O que esta arquitetura **não atende** (intencional)
 
@@ -60,7 +60,7 @@ flowchart LR
 - Persistência operacional: não há OLTP, estado da jornada vive na memória
 - Fluxos longos: jornadas de 90 dias não cabem em uma chamada HTTP
 - Fontes reais: dados são sintéticos, não há FHIR, claims, EHR
-- Conformidade operacional: validação clínica, DPIA, auditoria de acesso a PHI ficam por fora — a tese é técnica, não operacional
+- Conformidade operacional: validação clínica, DPIA, auditoria de acesso a PHI ficam por fora. A tese é técnica, não operacional
 
 Tudo isso é **endereçado pela arquitetura-alvo abaixo**.
 
@@ -132,10 +132,10 @@ flowchart LR
 
 | Pergunta | Resposta |
 |---|---|
-| **O que atende** | Operação real de uma plataforma de cuidado hiper personalizado para **~4,6M beneficiários**, com quatro modos de invocação (streaming, batch, evento, sob demanda — ver [`08`](08-integracao-em-producao.md)), múltiplos canais de ativação, governança clínica e financeira. |
+| **O que atende** | Operação real de uma plataforma de cuidado hiper personalizado para **~4,6M beneficiários**, com quatro modos de invocação (streaming, batch, evento, sob demanda. Ver [`08`](08-integracao-em-producao.md)), múltiplos canais de ativação, governança clínica e financeira. |
 | **Qual problema resolve** | Cuidado preventivo personalizado em escala não cabe em código de aplicação. Resolve simultaneamente: (1) ingestão contínua de dados heterogêneos (wearable em alta frequência + EHR/claims em batch), (2) decisão clínica auditável e calibrada, (3) comunicação no canal e tom certos, (4) jornadas de 90+ dias com humano no loop, (5) mensuração rigorosa de impacto clínico e financeiro, (6) conformidade LGPD/ANS/CFM por design. |
-| **Como faz** | Camadas separadas e contratualizadas — cada uma tem ADR justificando a escolha (ver [`adr/`](adr/)). Lakehouse bronze/silver/gold com FHIR canônico. Feature Store online (Redis) garante latência e elimina skew. ML serving k8s + HPA com canário e gates de fairness. GenAI gateway provider-neutral com cache semântico, redação de PII e validação de saída. Orquestração via Temporal — jornadas longas são código durável, não cron+fila. Eventos voltam ao lake fechando o ciclo de mensuração. |
-| **Por que faz assim** | Cada decisão é defensiva contra um risco específico em saúde: **lakehouse** porque PHI é semi-estruturado e claims é tabular — warehouse puro sofre, lake sem ACID sofre. **FHIR** porque RN ANS 506/2022 exige interoperabilidade. **ML clássico** porque decisão clínica precisa ser auditável e barata em escala (ADR 003). **GenAI só em texto** porque alucinação clínica é risco regulatório (ADR 004). **Feature Store** porque skew treino-inferência é o bug silencioso mais caro de ML em produção (ADR 005). **Temporal** porque jornada de 90 dias não cabe em HTTP nem em cron+fila (ADR 006). **Provider-neutral** porque lock-in em LLM pode duplicar custo em escala (Doc 05). |
+| **Como faz** | Camadas separadas e contratualizadas. Cada uma tem ADR justificando a escolha (ver [`adr/`](adr/)). Lakehouse bronze/silver/gold com FHIR canônico. Feature Store online (Redis) garante latência e elimina skew. ML serving k8s + HPA com canário e gates de fairness. GenAI gateway provider-neutral com cache semântico, redação de PII e validação de saída. Orquestração via Temporal. Jornadas longas são código durável, não cron+fila. Eventos voltam ao lake fechando o ciclo de mensuração. |
+| **Por que faz assim** | Cada decisão é defensiva contra um risco específico em saúde: **lakehouse** porque PHI é semi-estruturado e claims é tabular. Warehouse puro sofre, lake sem ACID sofre. **FHIR** porque RN ANS 506/2022 exige interoperabilidade. **ML clássico** porque decisão clínica precisa ser auditável e barata em escala (ADR 003). **GenAI só em texto** porque alucinação clínica é risco regulatório (ADR 004). **Feature Store** porque skew treino-inferência é o bug silencioso mais caro de ML em produção (ADR 005). **Temporal** porque jornada de 90 dias não cabe em HTTP nem em cron+fila (ADR 006). **Provider-neutral** porque lock-in em LLM pode duplicar custo em escala (Doc 05). |
 
 ### Capacidade-alvo
 
@@ -174,7 +174,7 @@ Documentado em [`infra/architecture-target.md`](../infra/architecture-target.md)
 
 A partir daqui, cada camada da arquitetura-alvo é descrita em detalhe. Diagramas C4, contêineres, decisões de capacidade e justificativas técnicas.
 
-## C4 nível 1 — Contexto
+## C4 nível 1. Contexto
 
 ```mermaid
 flowchart TB
@@ -200,7 +200,7 @@ flowchart TB
     SYS <-->|integração| TELE
 ```
 
-## C4 nível 2 — Contêineres
+## C4 nível 2. Contêineres
 
 | Contêiner | Responsabilidade | Stack sugerida |
 |---|---|---|
@@ -232,7 +232,7 @@ flowchart TB
 
 **Padronização:** sempre que possível, dados clínicos em **HL7 FHIR R4** (Patient, Observation, Condition, MedicationRequest). Wearables convertidos para `Observation` com `code` LOINC. Cláim em **TUSS** mapeado para FHIR `ChargeItem`.
 
-**Consentimento:** evento de consentimento explícito por finalidade — exigência LGPD ([`docs/04`](04-dados-e-conformidade.md)). Sem consentimento ativo para uma finalidade, o dado não entra no pipeline daquela finalidade.
+**Consentimento:** evento de consentimento explícito por finalidade. Exigência LGPD ([`docs/04`](04-dados-e-conformidade.md)). Sem consentimento ativo para uma finalidade, o dado não entra no pipeline daquela finalidade.
 
 ### 2. Ingestão
 
@@ -245,9 +245,9 @@ flowchart TB
 
 **Padrão Lakehouse com 3 camadas:**
 
-- **Bronze** — raw, append-only, retém payload original e metadados de ingestão. Útil para reprocessamento.
-- **Silver** — limpo, deduplicado, com `patient_id` resolvido (MDM). Aqui que o FHIR fica canônico.
-- **Gold** — agregado por caso de uso: features de modelo, KPIs de painel, datasets analíticos.
+- **Bronze:** Raw, append-only, retém payload original e metadados de ingestão. Útil para reprocessamento.
+- **Silver:** Limpo, deduplicado, com `patient_id` resolvido (MDM). Aqui que o FHIR fica canônico.
+- **Gold:** Agregado por caso de uso: features de modelo, KPIs de painel, datasets analíticos.
 
 **Particionamento** por data + tenant (operadora) + perfil. **Catálogo** unificado (Glue/Unity Catalog) com lineage e classificação de sensibilidade (PII / PHI / agregado).
 

@@ -1,4 +1,4 @@
-# 04 — Dados, Conformidade e Segurança
+# 04. Dados, Conformidade e Segurança
 
 > **Em saúde, conformidade não é um capítulo no final do documento. É restrição de arquitetura.**
 > Toda decisão técnica abaixo passou por três filtros: **LGPD** (dado pessoal e sensível), **regulação da ANS** (operação de saúde suplementar) e **resoluções do CFM** (ato médico, telemedicina).
@@ -26,7 +26,7 @@ A LGPD exige base legal explícita para tratar dado pessoal, e mais ainda para d
 | Cuidador no loop (idoso) | Consentimento adicional do beneficiário | Vínculo formal autorizado |
 | Pesquisa e modelos de IA | Anonimização irreversível + comitê de ética | Sem identificação possível |
 
-**Consentimento granular:** o beneficiário pode aceitar receber lembretes mas recusar análise comportamental. O sistema **respeita por finalidade** — o que ele não consentir, não entra naquele pipeline.
+**Consentimento granular:** o beneficiário pode aceitar receber lembretes mas recusar análise comportamental. O sistema **respeita por finalidade**. O que ele não consentir, não entra naquele pipeline.
 
 ## Princípios da LGPD aplicados
 
@@ -68,16 +68,16 @@ Por envolver **tratamento sistemático de dado sensível em larga escala**, a op
 
 A operadora-alvo é regulada pela ANS. Pontos de atenção desta solução:
 
-- **Resolução Normativa nº 506/2022** — interoperabilidade obrigatória do setor (TISS/TUSS no claim, FHIR no clínico). A arquitetura adota FHIR como canônico já pensando nisso.
-- **Padrões de troca de informação** — dados que saem para parceiros (laboratório, hospital) seguem padrões da ANS.
-- **Notificação de incidentes** — incidente de segurança que afete beneficiário tem fluxo dedicado para ANPD + ANS quando aplicável.
-- **Reajustes e produtos** — esta plataforma **não toma decisão de cobertura, autorização ou negativa**. É camada de **cuidado preventivo**. Decisão clínica/contratual continua nos sistemas de retaguarda regulados.
+- **Resolução Normativa nº 506/2022:** Interoperabilidade obrigatória do setor (TISS/TUSS no claim, FHIR no clínico). A arquitetura adota FHIR como canônico já pensando nisso.
+- **Padrões de troca de informação:** Dados que saem para parceiros (laboratório, hospital) seguem padrões da ANS.
+- **Notificação de incidentes:** Incidente de segurança que afete beneficiário tem fluxo dedicado para ANPD + ANS quando aplicável.
+- **Reajustes e produtos:** Esta plataforma **não toma decisão de cobertura, autorização ou negativa**. É camada de **cuidado preventivo**. Decisão clínica/contratual continua nos sistemas de retaguarda regulados.
 
 ## Conformidade CFM (telemedicina e ato médico)
 
 - **Resolução CFM nº 2.314/2022** regula telemedicina no Brasil. A plataforma acopla telemedicina via parceiro homologado, não exerce ato médico.
 - **IA não substitui médico.** O modelo de risco **recomenda**, o profissional **decide e prescreve**. Toda decisão clínica passa por humano, com IA como copiloto auditável.
-- **Prontuário** — qualquer registro clínico gerado segue norma do CFM (assinatura digital, integridade, retenção mínima de 20 anos).
+- **Prontuário:** Qualquer registro clínico gerado segue norma do CFM (assinatura digital, integridade, retenção mínima de 20 anos).
 
 ## Segurança técnica
 
@@ -89,12 +89,12 @@ A operadora-alvo é regulada pela ANS. Pontos de atenção desta solução:
 ### Controle de acesso
 - **IAM** com least-privilege e separação por papel (engenharia de dados, cientista, médico, atendimento, BI)
 - **ABAC** em cima de RBAC para regras como "médico só vê paciente sob seus cuidados"
-- **Aprovação de acesso a PHI bruto** — workflow com justificativa, expira em horas, log auditável
+- **Aprovação de acesso a PHI bruto:** Workflow com justificativa, expira em horas, log auditável
 - **MFA** obrigatório para acesso a sistemas com PHI
 
 ### Segregação de ambientes
 - Produção, staging e dev **fisicamente separados**
-- **Sem PHI em ambientes não-produção** — datasets sintéticos ou anonimização irreversível para dev/QA
+- **Sem PHI em ambientes não-produção:** Datasets sintéticos ou anonimização irreversível para dev/QA
 
 ### Anonimização e pseudonimização
 - **Pseudonimização:** silver tem `patient_id` substituído por hash com sal por finalidade. Re-identificação só com chave protegida no KMS.
@@ -143,11 +143,11 @@ A operadora-alvo é regulada pela ANS. Pontos de atenção desta solução:
 
 ## O que não fazer (anti-padrões em saúde digital)
 
-1. **Treinar modelo com PHI bruto enviado para LLM provider externo sem DPA** — vazamento massivo, risco institucional, multa LGPD.
-2. **"Anonimizar" só removendo nome** — quase-identificadores (CEP + idade + sexo + diagnóstico raro) re-identificam fácil.
-3. **Modelo opaco em decisão de cuidado** — se o médico não consegue entender por que o sistema sugeriu X, ele não vai usar e a auditoria não passa.
-4. **Confundir cuidado preventivo com decisão de cobertura** — IA aqui sugere ação de saúde, não nega procedimento. Cruzar essa linha gera judicialização.
-5. **Coletar tudo "porque pode ser útil"** — viola finalidade e necessidade da LGPD.
+1. **Treinar modelo com PHI bruto enviado para LLM provider externo sem DPA:** Vazamento massivo, risco institucional, multa LGPD.
+2. **"Anonimizar" só removendo nome:** Quase-identificadores (CEP + idade + sexo + diagnóstico raro) re-identificam fácil.
+3. **Modelo opaco em decisão de cuidado:** Se o médico não consegue entender por que o sistema sugeriu X, ele não vai usar e a auditoria não passa.
+4. **Confundir cuidado preventivo com decisão de cobertura:** IA aqui sugere ação de saúde, não nega procedimento. Cruzar essa linha gera judicialização.
+5. **Coletar tudo "porque pode ser útil":** Viola finalidade e necessidade da LGPD.
 
 ## Sumário em uma frase
 
