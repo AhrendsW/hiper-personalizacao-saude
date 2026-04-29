@@ -35,13 +35,24 @@ LLM (Claude prioritariamente) é aplicado em:
 | Auditoria | Log imutável (prompt + resposta + contexto) por usuário/finalidade |
 | Humano no loop | Saída clínica passa por médico antes de afetar cuidado |
 
-## Roteamento por modelo
+## Acesso provider-neutral
 
-- **Haiku** — extração simples, classificação leve, chatbot básico
-- **Sonnet** — comunicação personalizada, copiloto leve
-- **Opus** — copiloto clínico complexo, raciocínio sobre histórico longo
+LLM é consumido via **OpenRouter** (API OpenAI-compatible) no protótipo,
+e via **LiteLLM** ou gateway próprio em produção. A troca de provider
+(Anthropic, OpenAI, Google, modelos open-weights via vLLM) é configuração
+por env var, sem mudança de código.
 
-Critério: tarefa mais barata possível que entrega qualidade aceitável (avaliada com golden set).
+## Roteamento por classe de modelo
+
+- **Haiku-class** (Claude Haiku, GPT-4o-mini, Gemini Flash) — extração
+  simples, classificação leve, comunicação personalizada padrão
+- **Sonnet-class** (Claude Sonnet, GPT-4o, Gemini Pro) — copiloto leve,
+  geração com mais contexto
+- **Opus-class** (Claude Opus, GPT-4 Turbo) — copiloto clínico complexo,
+  raciocínio sobre histórico longo
+
+Critério: tarefa mais barata possível que entrega qualidade aceitável
+(avaliada com golden set).
 
 ## Consequências
 

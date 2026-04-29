@@ -5,7 +5,7 @@ from genai.client import generate_message
 
 @pytest.fixture(autouse=True)
 def _no_api_key(monkeypatch):
-    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    monkeypatch.delenv("OPENROUTER_API_KEY", raising=False)
 
 
 def _features():

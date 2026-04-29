@@ -12,7 +12,7 @@
 | Feature engineering | Função Python compartilhada | Feast com online (Redis) e offline (Iceberg) stores |
 | ML serving | Joblib + lru_cache | BentoML/SageMaker/Vertex com auto-scaling, A/B canário |
 | MLOps | metrics.json estático | MLflow registry + Evidently + gate de promoção |
-| GenAI | SDK Anthropic direto | Gateway com cache semântico, redação PII, roteamento por modelo |
+| GenAI | OpenRouter (gateway provider-neutral, OpenAI-compatible) | LiteLLM/gateway próprio com cache semântico, redação PII, roteamento por modelo |
 | Orquestração | Função pura | Temporal com workflow durável, sinais e queries |
 | OLTP operacional | Em memória | PostgreSQL multi-AZ |
 | Observabilidade | Structlog stdout | OpenTelemetry + Grafana + Loki + Datadog/Sentry |
@@ -28,7 +28,7 @@ flowchart TB
         direction LR
         P1[generate_data.py] --> P2[parquet local] --> P3[XGBoost joblib]
         P3 --> P4[FastAPI in-process]
-        P4 --> P5[Anthropic SDK direto]
+        P4 --> P5[OpenRouter<br/>provider-neutral]
     end
 
     subgraph PRODUCAO["Produção"]

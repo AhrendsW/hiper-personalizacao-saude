@@ -1,10 +1,17 @@
 """
-Cliente GenAI com fallback determinístico.
+Cliente GenAI provider-neutral via OpenRouter (API OpenAI-compatible).
 
-- Se ANTHROPIC_API_KEY estiver definida, chama Claude via SDK oficial.
-- Caso contrário, ou em caso de erro/validação que falha, monta mensagem
-  por template determinístico — beneficiário recebe mensagem mais genérica,
-  mas a jornada não trava.
+- Se OPENROUTER_API_KEY estiver definida, chama OpenRouter (default
+  openai/gpt-4o-mini, configurável via OPENROUTER_MODEL).
+- Caso contrário, ou se a resposta do modelo não passar na validação,
+  monta mensagem por template determinístico — beneficiário recebe
+  mensagem mais genérica, mas a jornada não trava.
+
+Por que OpenRouter: gateway provider-neutral. Trocar de
+anthropic/claude-haiku-4.5 para openai/gpt-4o-mini ou
+google/gemini-flash-1.5 é só mudar OPENROUTER_MODEL — sem reescrever
+código. Em produção a recomendação é o mesmo padrão (LiteLLM ou
+gateway próprio), com cache semântico e roteamento por tarefa.
 """
 
 from __future__ import annotations
@@ -18,7 +25,8 @@ from genai.prompts import RISK_GUIDANCE, SYSTEM_PROMPT, build_user_prompt
 
 log = structlog.get_logger(__name__)
 
-DEFAULT_MODEL = os.getenv("ANTHROPIC_MODEL", "claude-haiku-4-5-20251001")
+OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
+DEFAULT_MODEL = os.getenv("OPENROUTER_MODEL", "anthropic/claude-haiku-4.5")
 MAX_OUTPUT_TOKENS = 200
 
 
@@ -82,7 +90,7 @@ def generate_message(
     if risk_class not in RISK_GUIDANCE:
         raise ValueError(f"risk_class inválido: {risk_class}")
 
-    api_key = os.getenv("ANTHROPIC_API_KEY")
+    api_key = os.getenv("OPENROUTER_API_KEY")
     if not api_key:
         log.info("genai_fallback", reason="no_api_key", profile=profile, risk=risk_class)
         return GeneratedMessage(
@@ -92,19 +100,19 @@ def generate_message(
         )
 
     try:
-        from anthropic import Anthropic
+        from openai import OpenAI
 
-        client = Anthropic(api_key=api_key)
+        client = OpenAI(base_url=OPENROUTER_BASE_URL, api_key=api_key)
         user_prompt = build_user_prompt(profile, risk_class, top_features, persona_name)
-        resp = client.messages.create(
+        resp = client.chat.completions.create(
             model=DEFAULT_MODEL,
             max_tokens=MAX_OUTPUT_TOKENS,
-            system=SYSTEM_PROMPT,
-            messages=[{"role": "user", "content": user_prompt}],
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": user_prompt},
+            ],
         )
-        text = "".join(
-            block.text for block in resp.content if getattr(block, "type", "") == "text"
-        ).strip()
+        text = (resp.choices[0].message.content or "").strip()
 
         if not _validate_response(text):
             log.warning(

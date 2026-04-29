@@ -201,7 +201,7 @@ Detalhadas em [`docs/adr/`](adr/). Resumo:
 |---|---|---|
 | API + ML + GenAI + orquestração simples | ✅ | É a fatia vertical que prova a tese |
 | Dados sintéticos | ✅ | Sem PHI real, ágil |
-| FastAPI + XGBoost + Anthropic SDK | ✅ | Stack simples, demonstrável |
+| FastAPI + XGBoost + OpenRouter (OpenAI-compatible) | ✅ | Stack simples, demonstrável; provider-neutral via env var |
 | Kafka, Airflow, Spark, Feature Store | ❌ | Documentados em [`infra/architecture-target.md`](../infra/architecture-target.md) |
 | FHIR completo | ❌ | Schema simplificado no protótipo, FHIR é alvo de produção |
 | Multi-tenant, multi-região | ❌ | Roadmap |

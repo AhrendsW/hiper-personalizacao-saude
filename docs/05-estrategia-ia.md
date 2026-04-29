@@ -88,7 +88,10 @@ A tarefa é classificação/regressão sobre dado estruturado?
 - **Feature Store:** Feast — garante que treino e inferência usam mesma feature
 
 ### GenAI
-- **Provedor primário:** Anthropic Claude (Haiku para tarefas leves, Sonnet/Opus para clínico)
+- **Gateway provider-neutral:** OpenRouter no protótipo (default `anthropic/claude-haiku-4.5`,
+  trocável para `openai/gpt-4o-mini`, `google/gemini-flash-1.5`, etc. via env var).
+  Em produção, LiteLLM ou camada própria com a mesma ideia, e roteamento por tarefa
+  (Haiku-class para mensagem, Sonnet/Opus para copiloto clínico complexo).
 - **Provedor secundário:** open-weights via vLLM para cenários de soberania ou custo
 - **Roteamento:** LiteLLM ou camada própria — escolhe modelo por tarefa, custo e SLA
 - **Cache semântico** para perguntas recorrentes — corta custo significativamente

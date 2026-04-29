@@ -46,7 +46,7 @@ prototype/
 │   │   ├── train.py                # treino + SHAP
 │   │   └── score.py                # inferência + explicabilidade
 │   ├── genai/
-│   │   ├── client.py               # Anthropic SDK + fallback determinístico
+│   │   ├── client.py               # OpenRouter (OpenAI-compatible) + fallback determinístico
 │   │   └── prompts.py              # templates por persona
 │   ├── api/
 │   │   ├── main.py                 # FastAPI
@@ -62,7 +62,9 @@ prototype/
 
 Crie `.env` baseado em `.env.example`:
 
-- `ANTHROPIC_API_KEY` — opcional. Se ausente, GenAI cai em fallback determinístico.
+- `OPENROUTER_API_KEY` — opcional. Se ausente, GenAI cai em fallback determinístico.
+- `OPENROUTER_MODEL` — modelo a usar via OpenRouter. Default `anthropic/claude-haiku-4.5`.
+  Pode ser trocado para `openai/gpt-4o-mini`, `google/gemini-flash-1.5`, etc.
 - `LOG_LEVEL` — padrão `INFO`.
 - `MODEL_PATH` — caminho do modelo (default `artifacts/model.joblib`).
 
