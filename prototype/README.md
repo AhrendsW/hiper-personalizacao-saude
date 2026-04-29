@@ -40,7 +40,7 @@ Stack: Python 3.11 · FastAPI · XGBoost · SHAP · OpenRouter (provider-neutral
 ### 1. Crie o `.env` a partir do exemplo
 
 ```bash
-cp .env.example .env
+cp -n .env.example .env   # -n = no-clobber: não sobrescreve se já existir
 ```
 
 Conteúdo:

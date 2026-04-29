@@ -19,6 +19,7 @@ Wearables + Claims + Prontuário  →  ML decide risco  →  GenAI compõe açã
 
 ```bash
 cd prototype
+cp -n .env.example .env   # opcional: ative o GenAI real adicionando OPENROUTER_API_KEY ao .env
 docker compose up --build
 # em outro terminal
 curl -X POST localhost:8000/score \
@@ -27,6 +28,8 @@ curl -X POST localhost:8000/score \
 ```
 
 Saída esperada: score de risco, top features explicativas (SHAP) e mensagem personalizada gerada para a persona.
+
+> Sem `OPENROUTER_API_KEY` no `.env`, as mensagens vêm do **fallback determinístico** (template parametrizado). Com a chave, vêm do LLM real (Claude Haiku via OpenRouter, default). A jornada nunca trava.
 
 Detalhes completos de setup (Docker, uv local, CLI), configuração do `.env`, obtenção da `OPENROUTER_API_KEY` e troca de modelos: [`prototype/README.md`](prototype/README.md).
 
