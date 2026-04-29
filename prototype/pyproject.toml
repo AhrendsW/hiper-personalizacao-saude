@@ -1,7 +1,7 @@
 [project]
 name = "profectum-hiper-personalizacao"
 version = "0.1.0"
-description = "Protótipo de plataforma de cuidado hiper personalizado — case AI Engineer Profectum/Unimed"
+description = "Protótipo de plataforma de cuidado hiper personalizado em saúde suplementar"
 authors = [
     { name = "Gabriel Ahrends", email = "gabriel.ahrends.andrade@gmail.com" }
 ]

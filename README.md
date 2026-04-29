@@ -1,14 +1,14 @@
-# Hiper Personalização do Cuidado — Unimed Nacional
+# Hiper Personalização do Cuidado em Saúde Suplementar
 
-> Solução ponta a ponta de IA para uma jornada de cuidado **hiper personalizada**, desenhada para **maximizar a saúde do beneficiário** e **reduzir a sinistralidade** da operadora.
+> Solução ponta a ponta de IA para uma jornada de cuidado **hiper personalizada** em uma operadora de saúde, desenhada para **maximizar a saúde do beneficiário** e **reduzir a sinistralidade** da operadora.
 
-**Case técnico — vaga AI Engineer / Profectum Tecnologia · FIAP MBA+ Discover · Unimed Nacional**
+Estudo técnico de arquitetura e protótipo combinando ML clássico, GenAI, conformidade LGPD/ANS/CFM e mensuração clínica e financeira.
 
 ---
 
 ## TL;DR
 
-Cada beneficiário é único. Tratá-los de forma idêntica é caro para a operadora e ruim para o paciente. Esta proposta combina **modelos de ML clássico** (decisão clínica auditável) com **GenAI** (comunicação personalizada e raciocínio sobre texto), em uma arquitetura de dados conforme com **LGPD** e **regulação ANS/CFM**, escalável para os **4,6M de beneficiários** da Unimed Nacional.
+Cada beneficiário é único. Tratá-los de forma idêntica é caro para a operadora e ruim para o paciente. Esta proposta combina **modelos de ML clássico** (decisão clínica auditável) com **GenAI** (comunicação personalizada e raciocínio sobre texto), em uma arquitetura de dados conforme com **LGPD** e **regulação ANS/CFM**, dimensionada para uma operadora nacional na faixa de **4,6 milhões de beneficiários**.
 
 ```
 Wearables + Claims + Prontuário  →  ML decide risco  →  GenAI compõe ação  →  Engajamento

@@ -4,7 +4,7 @@
 
 ## Modelo de negócio
 
-### Para a Unimed Nacional (operadora)
+### Para a operadora
 A plataforma **não é produto vendido** — é **infraestrutura de cuidado** que reduz sinistralidade e melhora desfecho. A receita aparece no demonstrativo da operadora como **redução de despesa médica** e como **diferencial competitivo na captação e retenção** de beneficiários.
 
 | Mecanismo de retorno | Como mede |
@@ -16,7 +16,7 @@ A plataforma **não é produto vendido** — é **infraestrutura de cuidado** qu
 
 ### Modelos de negócio adjacentes que o PDF pede ("Novos modelos de negócio")
 
-Inspirados no que a Tronko já lança (CuidarPet, CuidarFarma, Clube de Vantagens Unimed), a plataforma habilita:
+Inspirados em movimentos do mercado de saúde suplementar (planos pet, farmácia digital, clubes de vantagens, programas de longevidade), a plataforma habilita:
 
 1. **Cuidado por assinatura para não-beneficiários** — versão da trilha preventiva como D2C, sem cobertura hospitalar mas com telemed e wearable. Funil para conversão em plano completo.
 2. **Programa B2B2C com empresas** — empregadores oferecem trilha preventiva como benefício, Unimed como provedora.

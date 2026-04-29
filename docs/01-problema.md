@@ -2,7 +2,7 @@
 
 ## Contexto
 
-A Unimed Nacional atende **4,6 milhões de beneficiários** (sendo 2M diretos e 2,6M por intercâmbio), opera em **92% do território nacional** e está inserida em um sistema com **mais de 2.600 hospitais** e **5.297 municípios**. Em escala dessa magnitude, o atendimento "médio" — o mesmo cuidado para todos — gera dois problemas simultâneos:
+A operadora-alvo deste estudo opera na faixa de **4,6 milhões de beneficiários** (cerca de 2M diretos e 2,6M por intercâmbio), com presença em **92% do território nacional** e integração a um sistema cooperativo com **mais de 2.600 hospitais** e **5.297 municípios** atendidos. Em escala dessa magnitude, o atendimento "médio" — o mesmo cuidado para todos — gera dois problemas simultâneos:
 
 1. **Para o beneficiário:** cuidado genérico não previne. Pessoas com perfis muito diferentes (jovem ativo, hipertenso, idoso com mobilidade reduzida) recebem a mesma jornada, e a doença é tratada quando já é cara — clínica e financeiramente.
 2. **Para a operadora:** sinistralidade alta, custo de hospitalizações evitáveis, baixa adesão a programas preventivos e atrito no engajamento.

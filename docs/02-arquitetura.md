@@ -68,7 +68,7 @@ flowchart LR
 flowchart TB
     BEN[Beneficiário]
     MED[Médico assistente]
-    OPER[Operadora<br/>Unimed Nacional]
+    OPER[Operadora<br/>de saúde]
     REG[ANS / LGPD]
 
     SYS[**Plataforma de Cuidado<br/>Hiper Personalizado**]

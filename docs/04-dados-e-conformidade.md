@@ -66,7 +66,7 @@ Por envolver **tratamento sistemático de dado sensível em larga escala**, a op
 
 ## Conformidade ANS
 
-A Unimed Nacional é operadora regulada pela ANS. Pontos de atenção desta solução:
+A operadora-alvo é regulada pela ANS. Pontos de atenção desta solução:
 
 - **Resolução Normativa nº 506/2022** — interoperabilidade obrigatória do setor (TISS/TUSS no claim, FHIR no clínico). A arquitetura adota FHIR como canônico já pensando nisso.
 - **Padrões de troca de informação** — dados que saem para parceiros (laboratório, hospital) seguem padrões da ANS.

@@ -24,7 +24,7 @@ load_dotenv()
 log = structlog.get_logger(__name__)
 
 app = FastAPI(
-    title="Profectum — Hiper Personalização do Cuidado (protótipo)",
+    title="Hiper Personalização do Cuidado — protótipo",
     description=(
         "Fatia vertical: wearable+claims → ML decide risco → GenAI compõe mensagem → API entrega."
     ),
