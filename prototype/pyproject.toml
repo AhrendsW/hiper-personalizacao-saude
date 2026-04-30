@@ -1,10 +1,7 @@
 [project]
-name = "profectum-hiper-personalizacao"
+name = "hiper-personalizacao-saude"
 version = "0.1.0"
 description = "Protótipo de plataforma de cuidado hiper personalizado em saúde suplementar"
-authors = [
-    { name = "Gabriel Ahrends", email = "gabriel.ahrends.andrade@gmail.com" }
-]
 requires-python = ">=3.11"
 dependencies = [
     "fastapi>=0.115",

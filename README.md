@@ -106,7 +106,3 @@ Caminhos alternativos sem Docker (uv local, CLI / scripts diretos), explicação
 | Digital & Innovation | [`docs/05`](docs/05-estrategia-ia.md), [`docs/07`](docs/07-modelo-de-negocio.md) |
 | Management & Business | [`docs/07`](docs/07-modelo-de-negocio.md) |
 | Integração em produção | [`docs/08`](docs/08-integracao-em-producao.md) |
-
----
-
-**Autor:** Gabriel Ahrends · `gabriel.ahrends.andrade@gmail.com`
