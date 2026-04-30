@@ -21,6 +21,7 @@ Wearables + Claims + Prontuário  →  ML decide risco  →  GenAI compõe açã
 
 - **Git** (para clonar o repositório)
 - **Docker** com Compose v2 ([Docker Desktop](https://docs.docker.com/get-started/get-docker/), [OrbStack](https://orbstack.dev/) ou [Colima](https://github.com/abiosoft/colima))
+- **[uv](https://docs.astral.sh/uv/getting-started/installation/)** (para rodar a demo visual via `./demo.sh`. Instalação em macOS/Linux: `curl -LsSf https://astral.sh/uv/install.sh | sh`. Não é necessário se você só for usar `curl` direto)
 - *(Opcional)* Conta no [OpenRouter](https://openrouter.ai/) para ativar mensagens via LLM real. Sem chave, a stack roda em fallback determinístico (template parametrizado), e a jornada não trava.
 
 ### Passos
@@ -57,6 +58,8 @@ Script que faz POST `/score` para as três personas e renderiza o resultado de f
 ```bash
 ./demo.sh
 ```
+
+> **Requer `uv` instalado.** O script é um wrapper que executa `demo.py` via `uv run` (sem precisar de `pip install`, `venv` ou outras deps manuais). Caso ainda não tenha `uv`, instale com `curl -LsSf https://astral.sh/uv/install.sh | sh` (macOS/Linux) ou veja os [outros métodos de instalação](https://docs.astral.sh/uv/getting-started/installation/).
 
 #### Opção B — `curl` direto (contrato JSON puro)
 
