@@ -48,7 +48,19 @@ docker compose up --build
 
 A primeira execução leva cerca de 30 segundos (instala dependências e treina o modelo dentro da imagem). Subidas seguintes são quase instantâneas.
 
-**5. Em outro terminal, teste com uma das personas:**
+**5. Em outro terminal, rode a demo (escolha uma das opções):**
+
+#### Opção A — `./demo.sh` (recomendada)
+
+Script que faz POST `/score` para as três personas e renderiza o resultado de forma visual no terminal: risco com cor, top features SHAP em linguagem cotidiana, ação/canal/prioridade da jornada e a mensagem gerada para o beneficiário.
+
+```bash
+./demo.sh
+```
+
+#### Opção B — `curl` direto (contrato JSON puro)
+
+Útil quando você quer ver o JSON bruto exatamente como um orquestrador, painel médico ou BI consumiria em produção:
 
 ```bash
 curl -X POST localhost:8000/score \
@@ -56,7 +68,7 @@ curl -X POST localhost:8000/score \
   -d @samples/maria.json
 ```
 
-Saída esperada: score de risco, top features explicativas (SHAP) e mensagem personalizada (`message_source: llm` se chave configurada, `fallback` caso contrário).
+Em ambos os casos a saída traz score de risco, top features explicativas (SHAP) e mensagem personalizada (`message_source: llm` se chave configurada, `fallback` caso contrário). A jornada nunca trava.
 
 Caminhos alternativos sem Docker (uv local, CLI / scripts diretos), explicação detalhada do `.env`, troca de modelo via `OPENROUTER_MODEL` e instruções para rodar testes e notebook: [`prototype/README.md`](prototype/README.md).
 

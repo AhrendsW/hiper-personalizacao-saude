@@ -162,10 +162,26 @@ uv run --with jupyter jupyter lab notebooks/
 
 ## Como testar a API
 
+### Pelo `demo.sh` (recomendado)
+
+Script que faz POST `/score` para as três personas (Júlia, Maria, João) e renderiza tudo formatado no terminal: risco com cor, top features SHAP em linguagem cotidiana, ação/canal/prioridade e mensagem do beneficiário.
+
+```bash
+./demo.sh
+```
+
+**O que é:** wrapper que executa `demo.py` via `uv run`. Depende apenas do `urllib` da stdlib, sem libs extras. Funciona em qualquer terminal com suporte a ANSI (macOS, Linux, Windows Terminal).
+
+**Pré-requisito:** API rodando em `localhost:8000` (Caminho 1 ou 2 acima). O script verifica `/health` e instrui a subir a stack se não estiver no ar.
+
+**Quando usar:** apresentações ao vivo, validação rápida da fatia vertical, demo para stakeholders não-técnicos. Para integração real (orquestrador, painel médico, BI), use o JSON puro do `curl`.
+
 ### Pelo Swagger
 <http://localhost:8000/docs>. Clique em `POST /score`, **Try it out**, cole o conteúdo de qualquer arquivo em `samples/` e **Execute**.
 
-### Por curl
+### Por curl (contrato técnico, JSON puro)
+
+Mostra exatamente o JSON que um consumidor real (orquestrador Temporal, painel do médico, BI) recebe:
 
 ```bash
 curl -X POST localhost:8000/score \
