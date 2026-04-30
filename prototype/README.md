@@ -134,6 +134,7 @@ uv run python -m ml.train
 Inferência direta sem HTTP:
 
 ```python
+from dataclasses import asdict
 from ml.score import predict
 
 features = {
@@ -144,8 +145,12 @@ features = {
     "n_consult_12m": 5, "n_emergency_12m": 1,
     "n_admissions_12m": 0, "chronic_count": 1,
 }
-print(predict(features))
+
+result = predict(features)
+print(asdict(result))   # representação como dict (legível, serializa para JSON)
 ```
+
+A função retorna um dataclass `RiskPrediction` com `risk_class`, `probabilities` e `top_features` (com SHAP). Use `asdict()` para serializar (`json.dumps(asdict(result))` funciona).
 
 Notebook didático em [`notebooks/01-eda-e-treino.ipynb`](notebooks/01-eda-e-treino.ipynb). Abra com:
 

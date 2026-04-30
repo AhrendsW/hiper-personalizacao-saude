@@ -17,19 +17,30 @@ Wearables + Claims + Prontuário  →  ML decide risco  →  GenAI compõe açã
 
 ## Como rodar
 
+**1. Crie o `.env`:**
+
 ```bash
 cd prototype
-[ -f .env ] || cp .env.example .env   # cria .env se não existir; ative o GenAI real adicionando OPENROUTER_API_KEY
+[ -f .env ] || cp .env.example .env
+```
+
+**2. (Opcional) Para mensagens via LLM real, edite `.env` e cole sua `OPENROUTER_API_KEY`** (obter chave em <https://openrouter.ai/keys>). Sem chave, a stack roda em fallback determinístico — funcional, mas as mensagens saem de template em vez do LLM.
+
+**3. Suba a stack:**
+
+```bash
 docker compose up --build
-# em outro terminal
+```
+
+**4. Em outro terminal, teste com uma das personas:**
+
+```bash
 curl -X POST localhost:8000/score \
   -H 'Content-Type: application/json' \
   -d @samples/maria.json
 ```
 
-Saída esperada: score de risco, top features explicativas (SHAP) e mensagem personalizada gerada para a persona.
-
-> Sem `OPENROUTER_API_KEY` no `.env`, as mensagens vêm do **fallback determinístico** (template parametrizado). Com a chave, vêm do LLM real (Claude Haiku via OpenRouter, default). A jornada nunca trava.
+Saída esperada: score de risco, top features explicativas (SHAP) e mensagem personalizada (`message_source: llm` se chave configurada, `fallback` caso contrário). A jornada nunca trava.
 
 Detalhes completos de setup (Docker, uv local, CLI), configuração do `.env`, obtenção da `OPENROUTER_API_KEY` e troca de modelos: [`prototype/README.md`](prototype/README.md).
 
