@@ -19,7 +19,7 @@ Wearables + Claims + Prontuário  →  ML decide risco  →  GenAI compõe açã
 
 ```bash
 cd prototype
-cp -n .env.example .env   # opcional: ative o GenAI real adicionando OPENROUTER_API_KEY ao .env
+[ -f .env ] || cp .env.example .env   # cria .env se não existir; ative o GenAI real adicionando OPENROUTER_API_KEY
 docker compose up --build
 # em outro terminal
 curl -X POST localhost:8000/score \
