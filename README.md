@@ -17,22 +17,38 @@ Wearables + Claims + Prontuário  →  ML decide risco  →  GenAI compõe açã
 
 ## Como rodar
 
-**1. Crie o `.env`:**
+### Pré-requisitos
+
+- **Git** (para clonar o repositório)
+- **Docker** com Compose v2 ([Docker Desktop](https://docs.docker.com/get-started/get-docker/), [OrbStack](https://orbstack.dev/) ou [Colima](https://github.com/abiosoft/colima))
+- *(Opcional)* Conta no [OpenRouter](https://openrouter.ai/) para ativar mensagens via LLM real. Sem chave, a stack roda em fallback determinístico (template parametrizado), e a jornada não trava.
+
+### Passos
+
+**1. Clone o repositório e entre na pasta do protótipo:**
 
 ```bash
-cd prototype
+git clone https://github.com/AhrendsW/hiper-personalizacao-saude.git
+cd hiper-personalizacao-saude/prototype
+```
+
+**2. Crie o `.env`:**
+
+```bash
 [ -f .env ] || cp .env.example .env
 ```
 
-**2. (Opcional) Para mensagens via LLM real, edite `.env` e cole sua `OPENROUTER_API_KEY`** (obter chave em <https://openrouter.ai/keys>). Sem chave, a stack roda em fallback determinístico — funcional, mas as mensagens saem de template em vez do LLM.
+**3. (Opcional) Para mensagens via LLM real, edite `.env` e cole sua `OPENROUTER_API_KEY`** (obter chave em <https://openrouter.ai/keys>).
 
-**3. Suba a stack:**
+**4. Suba a stack:**
 
 ```bash
 docker compose up --build
 ```
 
-**4. Em outro terminal, teste com uma das personas:**
+A primeira execução leva cerca de 30 segundos (instala dependências e treina o modelo dentro da imagem). Subidas seguintes são quase instantâneas.
+
+**5. Em outro terminal, teste com uma das personas:**
 
 ```bash
 curl -X POST localhost:8000/score \
@@ -40,9 +56,9 @@ curl -X POST localhost:8000/score \
   -d @samples/maria.json
 ```
 
-Saída esperada: score de risco, top features explicativas (SHAP) e mensagem personalizada (`message_source: llm` se chave configurada, `fallback` caso contrário). A jornada nunca trava.
+Saída esperada: score de risco, top features explicativas (SHAP) e mensagem personalizada (`message_source: llm` se chave configurada, `fallback` caso contrário).
 
-Detalhes completos de setup (Docker, uv local, CLI), configuração do `.env`, obtenção da `OPENROUTER_API_KEY` e troca de modelos: [`prototype/README.md`](prototype/README.md).
+Caminhos alternativos sem Docker (uv local, CLI / scripts diretos), explicação detalhada do `.env`, troca de modelo via `OPENROUTER_MODEL` e instruções para rodar testes e notebook: [`prototype/README.md`](prototype/README.md).
 
 ## Como navegar
 
